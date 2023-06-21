@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/static/images/s4.png" type="image/x-icon">
+
+    <title>Report</title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <!-- datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
+    <!-- Custom styles for this template -->
+    <link href="/static/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/static/css/responsive.css" rel="stylesheet" />
+
+    <!--Form CSS-->
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-control {
+            width: 50%;
+        }
+        textarea.form-control {
+            width: 50%;
+        }
+    </style>
+    <!--Form CSS-->
+
+
+<!--    &lt;!&ndash; Lightbox2 CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">-->
+
+<!--    &lt;!&ndash; Lightbox2 JS &ndash;&gt;-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>-->
+
+</head>
+
+<body>
+    <!-- header section strats -->
+    <header class="header_section" style="background-color: green;">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container ">
+                <a class="navbar-brand" href="index.html">
+                    <h3>
+                        HealthCare Management System
+                    </h3>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
+                    <ul class="navbar-nav  ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html"> About </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="service.html"> Services </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="appointment.html"> Appointment </a>
+                        </li>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" th:href="@{/dashboard}"><i class="fa fa-user-o"></i> My Account </a>
+                        </li>
+
+                    </ul>
+<!--                    <form class="form-inline ">-->
+<!--                        <button class="btn nav_search-btn" type="submit">-->
+<!--                            <i class="fa fa-search" aria-hidden="true"></i>-->
+<!--                        </button>-->
+<!--                    </form>-->
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- end header section -->
+    <form th:action="@{/logout}" method="post" style="display: flex; justify-content: flex-end; margin-right: 25px;">
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+    <!--Add report Section-->
+    <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/dashboard/report/add}" class="m-5 btn btn-primary">Add Report</a>
+    <!--Add report Section-->
+
+
+    <!--Report List-->
+<div>
+    <table class="table m-5 w-50" style="size:20px">
+        <thead class="table-dark">
+        <tr>
+            <td>S.N</td>
+            <td>Name</td>
+            <td>Age</td>
+            <td>View Report</td>
+            <td>Update</td>
+            <td>Delete</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="report, iSat : ${report}">
+            <th th:text="${iSat.index + 1}"></th>
+            <th th:text="${report.name}"></th>
+            <th th:text="${report.age}"></th>
+<!--            <td>-->
+<!--                <a href="@{${'/static/js/Lightbox2.js}}" data-lightbox="report-images" data-title="Report Image">-->
+<!--                    <img src="" height="100px" width="100px" th:src="@{${'/static/report-pdf/' + report.image}}">-->
+<!--                </a>-->
+<!--            </td>-->
+
+
+            <td>
+<!--                <a th:href="@{/dashboard/open}{id}(id=${report.id})}" class="m-5 btn btn-primary">View Report</a>-->
+                <img src="" height="100px" width="100px"  th:src="@{${'/static/report-pdf/' + report.image}}">
+<!--            </a>-->
+            </td>
+            <td>
+                <a sec:authorize="hasAuthority('ADMIN')" href="" th:href="@{/dashboard/report/update/{id}(id=${report.id})}" class="btn btn-warning">Update</a>
+            </td>
+            <td>
+                <a sec:authorize="hasAuthority('ADMIN')" href="" th:href="@{/dashboard/report/delete/{id}(id=${report.id})}" class="btn btn-danger">Delete</a>
+            </td>
+</div>
+</body>
+</html>

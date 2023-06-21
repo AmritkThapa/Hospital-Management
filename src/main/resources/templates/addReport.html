@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/static/images/s4.png" type="image/x-icon">
+
+    <title>Add Report</title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,600,700&display=swap" rel="stylesheet" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <!-- datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
+    <!-- Custom styles for this template -->
+    <link href="/static/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="/static/css/responsive.css" rel="stylesheet" />
+
+    <!--Form CSS-->
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-control {
+            width: 50%;
+        }
+        .custom-file-label{
+            width: 50%;}
+        textarea.form-control {
+            width: 50%;
+        }
+    </style>
+    <!--Form CSS-->
+</head>
+
+<body>
+    <!-- header section strats -->
+    <header class="header_section" style="background-color: green;">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg custom_nav-container ">
+                <a class="navbar-brand" href="index.html">
+                    <h3>
+                        HealthCare Management System
+                    </h3>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
+                    <ul class="navbar-nav  ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html"> About </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="service.html"> Services </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="appointment.html"> Appointment </a>
+                        </li>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" th:href="@{/dashboard}"><i class="fa fa-user-o"></i> My Account </a>
+                        </li>
+
+                    </ul>
+<!--                    <form class="form-inline ">-->
+<!--                        <button class="btn nav_search-btn" type="submit">-->
+<!--                            <i class="fa fa-search" aria-hidden="true"></i>-->
+<!--                        </button>-->
+<!--                    </form>-->
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- end header section -->
+
+<!--Add Report Section-->
+<div class="container" style="margin: 5%">
+    <form th:action="@{/dashboard/report/add}" method="post" th:object="${reportDto}" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:field="*{id}">
+        <div class="form-group">
+            <label for="reportName" style="font-size: 18px;">Name</label>
+            <input th:field="*{name}" type="text" class="form-control" id="reportName" placeholder="Enter name of Patient">
+        </div>
+        <div class="form-group">
+            <label style="font-size: 18px;">Age</label>
+            <input type="number" th:field="*{age}" class="form-control" placeholder="Enter Age of Patient">
+        </div>
+        <br>
+
+        <!--Image-->
+        <div class="custom-file">
+            <label class="custom-file-label" for="image">Choose Report</label>
+            <input type="file" class="custom-file-input" name="image" accept="image/png, image/jpeg" id="image"/>
+        </div>
+        <div class="form-group">
+            <img src="#" id="imgPreview" height="100px" width="100px" th:src="@{${'/report-pdf/' + reportDto.image}}" style="margin-top: 20px" alt=" ">
+        </div>
+        <input type="hidden" name="imgName" th:value="${reportDto.image}">
+        <!--Image-->
+        <br>
+<!--        <div class="custom-file">-->
+<!--            <label class="custom-file-label" for="reportpdf">Choose Report</label>-->
+<!--            <input type="file" id="reportpdf" name="reportpdf" class="custom-file-input" accept="application/pdf" required>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <object th:if="${reportDto.reportPdf!=null}" th:data="@{${'/report-pdf/' + ReportDto.pdf}}" type="application/pdf" alt=" ">-->
+<!--                <embed th:attr="src=@{/report-pdf/' + ${reportDto.reportPdf}}, type='application/pdf'"/>-->
+<!--            </object>-->
+<!--        </div>-->
+<!--        <input type="hidden" name="fileName" th:value="${reportDto.reportPdf}">-->
+<!--        <br><br>-->
+        <button type="submit" class="btn btn-primary" style="font-size: 18px;">Submit</button>
+    </form>
+</div>
+<!-- /Add report Form -->
+</body>
+</html>
